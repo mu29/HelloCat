@@ -46,8 +46,8 @@ export default class Home extends Component {
           />
         </View>
         <View style={ styles.content }>
-          <IconButton icon="times" size={ 36 } color="#FA5D63" enable/>
           <IconButton icon="star" size={ 36 } color="#5B93FC" />
+          <IconButton icon="arrow-right" size={ 36 } color="#FA5D63" iconStyle={ { marginLeft: 2, marginBottom: 2 } } enable/>
         </View>
       </View>
     )
