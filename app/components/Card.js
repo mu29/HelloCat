@@ -42,11 +42,12 @@ const styles = StyleSheet.create({
 
 export default class Card extends Component {
   render() {
+    const { url, star, date } = this.props;
     return (
       <View style={ styles.container }>
         <View style={ styles.wrapper }>
           <YouTube
-            videoId="KVZ-P-ZI6W4"
+            videoId={ url }
             play={ true }
             hidden={ false }
             playsInline={ true }
@@ -59,10 +60,10 @@ export default class Card extends Component {
           />
         </View>
         <View style={ styles.content }>
-          <Text style={ styles.date }>2017. 2. 25 #2</Text>
+          <Text style={ styles.date }>{ date }</Text>
           <View style={ { flex: 1 } } />
           <Icon name="star" size={ 16 } color="#5B93FC" />
-          <Text style={ styles.count }> 3358</Text>
+          <Text style={ styles.count }> { star }</Text>
         </View>
       </View>
     )
