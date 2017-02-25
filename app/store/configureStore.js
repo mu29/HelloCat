@@ -1,4 +1,5 @@
 import { applyMiddleware, createStore, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { AsyncStorage } from 'react-native';
@@ -11,7 +12,7 @@ var logger = createLogger({
   duration: true,
 });
 
-var createStoreWithMiddleware = applyMiddleware(logger)(createStore);
+var createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
 
 export default function configureStore(onComplete: ?() => void) {
   const reducers = require('../modules');
