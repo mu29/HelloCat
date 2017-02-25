@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export deufalt class Router extends Component {
+export default class Router extends Component {
   constructor() {
     super();
     this._handlers = [];
