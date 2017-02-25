@@ -1,3 +1,5 @@
 rootProject.name = 'DailyCat'
 
 include ':app'
+include ':react-native-youtube'
+project(':react-native-youtube').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-youtube/android')
