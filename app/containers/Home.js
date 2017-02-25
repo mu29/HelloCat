@@ -5,6 +5,7 @@ import SwipeCards from 'react-native-swipe-cards';
 import DataBase from '../firebase/DataBase';
 import Navigation from '../components/Navigation';
 import Card from '../components/Card';
+import Empty from '../components/Empty';
 import IconButton from '../components/IconButton';
 import { readVideoList, starVideo, unStarVideo } from '../modules/Video';
 
@@ -18,8 +19,10 @@ const styles = StyleSheet.create({
   },
   content: {
     height: 72,
+    paddingBottom: 24,
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -27,45 +30,77 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      cards: [],
+      currentCard: {},
     };
+    this.showPrevious = this.showPrevious.bind(this);
+    this.setCurrentCard = this.setCurrentCard.bind(this);
   }
 
   componentDidMount() {
     this.props.readVideoList();
-  }
-
-  componentWillReceiveProps({ videos }) {
-    if (videos !== undefined) {
-      this.setState({ cards: videos });
+    if (this.props.videos !== undefined) {
+      this.setState({ currentCard: this.props.videos[0] });
     }
   }
 
+  componentWillReceiveProps({ videos }) {
+    if (this.props.videos === undefined) {
+      this.setState({ currentCard: videos[0] });
+    }
+  }
+
+  setCurrentCard(index) {
+    const { videos } = this.props;
+    this.setState({ currentCard: videos[index + 1] || videos[0] });
+  }
+
+  showPrevious() {
+    this.refs.cardContainer._goToPrevCard();
+  }
+
   render() {
-    const { cards } = this.state;
-    const { stars, starVideo, unStarVideo } = this.props;
-console.log(this);
+    const { stars, videos, starVideo, unStarVideo } = this.props;
+    const currentId = this.state.currentCard.id;
+
+    console.log(this.state.currentCard);
+    console.log(this.props.stars);
+
     return (
       <View style={ styles.container }>
         <Navigation />
         <View style={ styles.card }>
           <SwipeCards
-            cards={this.state.cards}
-            loop={false}
-            renderCard={(cardData) => <Card {...cardData} />}
-            showYup={false}
-            showNope={false}
+            ref="cardContainer"
+            cards={ videos }
+            loop={ true }
+            renderCard={ (cardData) => <Card {...cardData} /> }
+            renderNoMoreCards={ () => <Empty /> }
+            showYup={ false }
+            showNope={ false }
+            cardRemoved={ this.setCurrentCard }
           />
         </View>
         <View style={ styles.content }>
           <IconButton
+            icon="arrow-left"
+            size={ 36 }
+            color="#797979"
+            iconStyle={ { marginBottom: 2 } }
+            enable
+            onClick={ this.showPrevious }
+          />
+          <IconButton
             icon="star"
             size={ 36 }
             color="#5B93FC"
-            enable={ cards[0] && stars.indexOf(cards[0].id) > -1 }
-            onClick={ () => { cards[0] && (stars.indexOf(cards[0].id) > -1 ? unStarVideo(cards[0].id) : starVideo(cards[0].id)) } }
+            enable={ stars.indexOf(currentId) > -1 }
+            onClick={ () => {
+              if (Object.keys(this.state.currentCard).length === 0) {
+                return;
+              }
+              stars.indexOf(currentId) > -1 ? unStarVideo(currentId) : starVideo(currentId)
+            }}
           />
-          <IconButton icon="arrow-right" size={ 36 } color="#FA5D63" iconStyle={ { marginLeft: 2, marginBottom: 2 } } enable/>
         </View>
       </View>
     )
