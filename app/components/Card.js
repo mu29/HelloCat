@@ -51,10 +51,10 @@ export default class Card extends Component {
             play={ true }
             hidden={ false }
             playsInline={ true }
-            loop={ false }
+            loop={ true }
             style={ styles.video }
             showInfo={ false }
-            rel={ true }
+            rel={ false }
             modestbranding={ true }
             apiKey="AIzaSyCm10wCjq4co9FD-TPgWHv6pFHSoQnmAcg"
           />
