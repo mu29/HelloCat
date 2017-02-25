@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
 export default class IconButton extends Component {
   render() {
-    const { enable, icon, iconStyle, size, color, ...props } = this.props;
+    const { enable, icon, iconStyle, size, color, onClick, ...props } = this.props;
     const circleStyle = {
       width: size + 16,
       height: size + 16,
@@ -24,9 +24,11 @@ export default class IconButton extends Component {
     };
     const iconColor = enable ? color : '#E0E0E0';
     return (
-      <View style={ [styles.container, circleStyle] } { ...props }>
-        <Icon style={ iconStyle } name={ icon } size={ size } color={ iconColor } />
-      </View>
+      <TouchableHighlight underlayColor={ 'transparent' } onPress={ onClick }>
+        <View style={ [styles.container, circleStyle] } { ...props }>
+          <Icon style={ iconStyle } name={ icon } size={ size } color={ iconColor } />
+        </View>
+      </TouchableHighlight>
     )
   }
 }
