@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: 300,
-    margin: 32,
+    margin: 24,
     paddingTop: 8,
     borderRadius: 8,
     backgroundColor: '#000',
@@ -46,12 +46,16 @@ export default class Card extends Component {
       <View style={ styles.container }>
         <View style={ styles.wrapper }>
           <YouTube
-            videoId="KVZ-P-ZI6W4" // The YouTube video ID
+            videoId="KVZ-P-ZI6W4"
             play={ true }
             hidden={ false }
-            playsInline={ true }    // control whether the video should play inline
+            playsInline={ true }
             loop={ false }
             style={ styles.video }
+            showInfo={ false }
+            rel={ true }
+            modestbranding={ true }
+            apiKey="AIzaSyCm10wCjq4co9FD-TPgWHv6pFHSoQnmAcg"
           />
         </View>
         <View style={ styles.content }>
