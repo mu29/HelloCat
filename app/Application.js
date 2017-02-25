@@ -13,14 +13,6 @@ export default class Application extends React.Component {
     };
   }
 
-  componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChange);
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange);
-  }
-
   render() {
     if (this.state.loading) {
       return null;
