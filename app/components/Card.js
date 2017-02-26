@@ -7,8 +7,9 @@ import { commaNumber } from '../utils';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 300,
-    margin: 24,
+    width: 350,
+    marginTop: 16,
+    marginBottom: 24,
     paddingTop: 8,
     borderRadius: 8,
     backgroundColor: '#000',
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000'
   },
   content: {
-    width: 300,
+    width: 350,
     height: 48,
     padding: 16,
     alignItems: 'center',
