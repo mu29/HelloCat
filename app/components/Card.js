@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Text, Image, View, StyleSheet } from 'react-native';
 import YouTube from 'react-native-youtube'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { commaNumber } from '../utils';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: 300,
-    margin: 24,
+    width: 350,
+    marginTop: 16,
+    marginBottom: 24,
     paddingTop: 8,
     borderRadius: 8,
     backgroundColor: '#000',
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000'
   },
   content: {
-    width: 300,
+    width: 350,
     height: 48,
     padding: 16,
     alignItems: 'center',
@@ -31,10 +33,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 7,
     backgroundColor: '#FFF',
   },
-  date: {
+  view: {
     color: '#BDBDBD',
   },
-  count: {
+  star: {
     color: '#5B93FC',
     fontWeight: '500',
   },
@@ -42,27 +44,30 @@ const styles = StyleSheet.create({
 
 export default class Card extends Component {
   render() {
+    const { url, view, star, next } = this.props;
     return (
       <View style={ styles.container }>
         <View style={ styles.wrapper }>
           <YouTube
-            videoId="KVZ-P-ZI6W4"
+            videoId={ url }
             play={ true }
             hidden={ false }
             playsInline={ true }
             loop={ false }
             style={ styles.video }
             showInfo={ false }
-            rel={ true }
+            rel={ false }
             modestbranding={ true }
             apiKey="AIzaSyCm10wCjq4co9FD-TPgWHv6pFHSoQnmAcg"
+            onChangeState={ e => e.state === 'ended' && next() }
           />
         </View>
         <View style={ styles.content }>
-          <Text style={ styles.date }>2017. 2. 25 #2</Text>
+          <Icon name="eye" size={ 16 } color="#BDBDBD" />
+          <Text style={ styles.view }> { commaNumber(view) }</Text>
           <View style={ { flex: 1 } } />
           <Icon name="star" size={ 16 } color="#5B93FC" />
-          <Text style={ styles.count }> 3358</Text>
+          <Text style={ styles.star }> { commaNumber(star) }</Text>
         </View>
       </View>
     )

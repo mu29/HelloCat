@@ -1,4 +1,4 @@
-package com.dailycat;
+package com.hellocat;
 
 import android.app.Application;
 import android.util.Log;

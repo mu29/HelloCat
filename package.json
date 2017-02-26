@@ -1,5 +1,5 @@
 {
-  "name": "DailyCat",
+  "name": "HelloCat",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,15 +7,18 @@
     "test": "jest"
   },
   "dependencies": {
+    "firebase": "^3.6.10",
     "react": "15.4.2",
     "react-native": "0.41.2",
+    "react-native-modalbox": "^1.3.9",
     "react-native-swipe-cards": "^0.1.0",
     "react-native-vector-icons": "^4.0.0",
     "react-native-youtube": "^0.8.1",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
     "redux-logger": "^2.8.1",
-    "redux-persist": "^4.4.2"
+    "redux-persist": "^4.4.2",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",
