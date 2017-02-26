@@ -1,4 +1,4 @@
-package com.hellocat;
+package net.yeoubi.hellocat;
 
 import com.facebook.react.ReactActivity;
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube;

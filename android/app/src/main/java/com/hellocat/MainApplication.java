@@ -1,4 +1,4 @@
-package com.hellocat;
+package net.yeoubi.hellocat;
 
 import android.app.Application;
 import android.util.Log;
