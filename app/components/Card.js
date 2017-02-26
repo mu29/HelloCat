@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, Image, View, StyleSheet } from 'react-native';
+import { Platform, Text, Image, View, StyleSheet } from 'react-native';
 import YouTube from 'react-native-youtube'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { AdMobBanner } from 'react-native-admob';
 import { commaNumber } from '../utils';
 
 const styles = StyleSheet.create({
@@ -40,10 +41,37 @@ const styles = StyleSheet.create({
     color: '#5B93FC',
     fontWeight: '500',
   },
+  admobWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F5F5F5',
+  },
+  admob: {
+    width: 300,
+    height: 250,
+  },
 });
 
 export default class Card extends Component {
-  render() {
+  constructor() {
+    super();
+    this.renderAd = this.renderAd.bind(this);
+    this.renderCard = this.renderCard.bind(this);
+  }
+
+  renderAd() {
+    return (
+      <View style={ [styles.container, styles.admobWrapper] }>
+        <AdMobBanner
+          style={ styles.admob }
+          bannerSize="mediumRectangle"
+          adUnitID={ Platform.OS === 'android' ? 'ca-app-pub-6988311040138762/1354777738' : 'ca-app-pub-6988311040138762/5483926136' }
+        />
+      </View>
+    )
+  }
+
+  renderCard() {
     const { url, view, star, next } = this.props;
     return (
       <View style={ styles.container }>
@@ -58,7 +86,7 @@ export default class Card extends Component {
             showInfo={ false }
             rel={ false }
             modestbranding={ true }
-            apiKey="AIzaSyCm10wCjq4co9FD-TPgWHv6pFHSoQnmAcg"
+            apiKey="AIzaSyAxvXdsbg9677FMfCfL3-kx0z7mnM4NA9Y"
             onChangeState={ e => e.state === 'ended' && next() }
           />
         </View>
@@ -71,5 +99,11 @@ export default class Card extends Component {
         </View>
       </View>
     )
+  }
+
+  render() {
+    const { ad } = this.props;
+    console.log(this.props);
+    return ad ? this.renderAd() : this.renderCard()
   }
 }
