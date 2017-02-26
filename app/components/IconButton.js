@@ -19,8 +19,8 @@ export default class IconButton extends Component {
       width: size + 16,
       height: size + 16,
       borderRadius: (size + 16) / 2,
-      marginLeft: size / 3,
-      marginRight: size / 3,
+      marginLeft: 8,
+      marginRight: 8,
     };
     const iconColor = enable ? color : '#E0E0E0';
     return (

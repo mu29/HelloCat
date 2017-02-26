@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Platform, Image, Text, View, StyleSheet } from 'react-native';
+import { Platform, TouchableHighlight, Image, Text, View, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import IconButton from '../components/IconButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,6 +20,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
   },
+  buttonWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    marginRight: 24,
+  },
 });
 
 export default class Navigation extends Component {
@@ -31,10 +42,18 @@ export default class Navigation extends Component {
   }
 
   render() {
+    const { showModal } = this.props;
     return (
       <View style={ styles.container }>
+        <View style={ { flex: 1 } } />
         <Image source={ require('../resources/icon.png') } style={ { width: 24, height: 24 } } />
-        <Text style={ styles.title }>DailyCat</Text>
+        <Text style={ styles.title }>HelloCat</Text>
+        <View style={ styles.buttonWrapper }>
+          <View style={ { flex: 1 } } />
+          <TouchableHighlight underlayColor={ 'transparent' } onPress={ showModal }>
+            <Icon style={ styles.button } name="plus-circle" color="#E0E0E0" size={ 24 } />
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Platform, View, StyleSheet } from 'react-native';
 import SwipeCards from 'react-native-swipe-cards';
+import Modal from 'react-native-modalbox';
 import DataBase from '../firebase/DataBase';
 import Navigation from '../components/Navigation';
 import Card from '../components/Card';
 import Empty from '../components/Empty';
+import Report from '../components/Report';
 import IconButton from '../components/IconButton';
-import { readVideoList, viewVideo, clearViewData, starVideo, unStarVideo } from '../modules/Video';
+import { readVideoList, reportVideo, viewVideo, clearViewData, starVideo, unStarVideo } from '../modules/Video';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,6 +25,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 100,
+    width: 320,
   },
 });
 
@@ -69,12 +77,12 @@ class Home extends Component {
 
   render() {
     const { currentCard } = this.state;
-    const { views, stars, videos, clearViewData, starVideo, unStarVideo } = this.props;
+    const { views, stars, videos, reportVideo, clearViewData, starVideo, unStarVideo } = this.props;
     const currentId = currentCard && currentCard.id || 0;
 
     return (
       <View style={ styles.container }>
-        <Navigation />
+        <Navigation showModal={ () => this.refs.report.open() } />
         <View style={ styles.card }>
           <SwipeCards
             ref="cardContainer"
@@ -119,6 +127,9 @@ class Home extends Component {
             enable
           />
         </View>
+        <Modal style={ styles.modal } position="center" ref="report">
+          <Report reportVideo={ reportVideo } close={ () => this.refs.report.close() } />
+        </Modal>
       </View>
     )
   }
@@ -130,5 +141,5 @@ export default connect(
     views: Video.views,
     stars: Video.stars
   }),
-  { readVideoList, viewVideo, clearViewData, starVideo, unStarVideo }
+  { readVideoList, reportVideo, viewVideo, clearViewData, starVideo, unStarVideo }
 )(Home);
