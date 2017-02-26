@@ -33,6 +33,7 @@ class Home extends Component {
       currentCard: {},
     };
     this.nextCard = this.nextCard.bind(this);
+    this.previousCard = this.previousCard.bind(this);
     this.setCurrentCard = this.setCurrentCard.bind(this);
   }
 
@@ -50,7 +51,14 @@ class Home extends Component {
   }
 
   nextCard() {
-    this.refs.cardContainer._forceRightSwipe()
+    this.refs.cardContainer._forceRightSwipe();
+  }
+
+  previousCard() {
+    const { videos } = this.props;
+    const nextIndex = videos.indexOf(this.state.currentCard) - 1;
+    this.setState({ currentCard: videos[nextIndex] || videos[0] });
+    this.refs.cardContainer._goToPrevCard();
   }
 
   setCurrentCard(index) {
@@ -59,8 +67,9 @@ class Home extends Component {
   }
 
   render() {
+    const { currentCard } = this.state;
     const { stars, videos, starVideo, unStarVideo } = this.props;
-    const currentId = this.state.currentCard && this.state.currentCard.id || 0;
+    const currentId = currentCard && currentCard.id || 0;
 
     return (
       <View style={ styles.container }>
@@ -84,7 +93,7 @@ class Home extends Component {
             color="#797979"
             iconStyle={ { marginBottom: 2 } }
             enable
-            onClick={ () => this.refs.cardContainer._goToPrevCard() }
+            onClick={ this.previousCard }
           />
           <IconButton
             icon="star"
