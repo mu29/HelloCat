@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFF',
     borderBottomColor: '#E0E0E0',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
   },
   title: {
     marginLeft: 8,

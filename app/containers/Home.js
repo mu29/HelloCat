@@ -32,7 +32,7 @@ class Home extends Component {
     this.state = {
       currentCard: {},
     };
-    this.showPrevious = this.showPrevious.bind(this);
+    this.nextCard = this.nextCard.bind(this);
     this.setCurrentCard = this.setCurrentCard.bind(this);
   }
 
@@ -49,21 +49,18 @@ class Home extends Component {
     }
   }
 
+  nextCard() {
+    this.refs.cardContainer._forceRightSwipe()
+  }
+
   setCurrentCard(index) {
     const { videos } = this.props;
     this.setState({ currentCard: videos[index + 1] || videos[0] });
   }
 
-  showPrevious() {
-    this.refs.cardContainer._goToPrevCard();
-  }
-
   render() {
     const { stars, videos, starVideo, unStarVideo } = this.props;
-    const currentId = this.state.currentCard.id;
-
-    console.log(this.state.currentCard);
-    console.log(this.props.stars);
+    const currentId = this.state.currentCard && this.state.currentCard.id || 0;
 
     return (
       <View style={ styles.container }>
@@ -73,7 +70,7 @@ class Home extends Component {
             ref="cardContainer"
             cards={ videos }
             loop={ true }
-            renderCard={ (cardData) => <Card {...cardData} /> }
+            renderCard={ (cardData) => <Card {...cardData} next={ this.nextCard } /> }
             renderNoMoreCards={ () => <Empty /> }
             showYup={ false }
             showNope={ false }
@@ -83,11 +80,11 @@ class Home extends Component {
         <View style={ styles.content }>
           <IconButton
             icon="arrow-left"
-            size={ 36 }
+            size={ 24 }
             color="#797979"
             iconStyle={ { marginBottom: 2 } }
             enable
-            onClick={ this.showPrevious }
+            onClick={ () => this.refs.cardContainer._goToPrevCard() }
           />
           <IconButton
             icon="star"
@@ -100,6 +97,14 @@ class Home extends Component {
               }
               stars.indexOf(currentId) > -1 ? unStarVideo(currentId) : starVideo(currentId)
             }}
+          />
+          <IconButton
+            icon="arrow-right"
+            size={ 24 }
+            color="#797979"
+            iconStyle={ { marginLeft: 2, marginBottom: 2 } }
+            onClick={ () => this.refs.cardContainer._forceRightSwipe() }
+            enable
           />
         </View>
       </View>
