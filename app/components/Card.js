@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, Image, View, StyleSheet } from 'react-native';
 import YouTube from 'react-native-youtube'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { commaNumber } from '../utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,10 +32,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 7,
     backgroundColor: '#FFF',
   },
-  date: {
+  view: {
     color: '#BDBDBD',
   },
-  count: {
+  star: {
     color: '#5B93FC',
     fontWeight: '500',
   },
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
 
 export default class Card extends Component {
   render() {
-    const { url, star, date } = this.props;
+    const { url, view, star, next } = this.props;
     return (
       <View style={ styles.container }>
         <View style={ styles.wrapper }>
@@ -51,19 +52,21 @@ export default class Card extends Component {
             play={ true }
             hidden={ false }
             playsInline={ true }
-            loop={ true }
+            loop={ false }
             style={ styles.video }
             showInfo={ false }
             rel={ false }
             modestbranding={ true }
             apiKey="AIzaSyCm10wCjq4co9FD-TPgWHv6pFHSoQnmAcg"
+            onChangeState={ e => e.state === 'ended' && next() }
           />
         </View>
         <View style={ styles.content }>
-          <Text style={ styles.date }>{ date }</Text>
+          <Icon name="eye" size={ 16 } color="#BDBDBD" />
+          <Text style={ styles.view }> { commaNumber(view) }</Text>
           <View style={ { flex: 1 } } />
           <Icon name="star" size={ 16 } color="#5B93FC" />
-          <Text style={ styles.count }> { star }</Text>
+          <Text style={ styles.star }> { commaNumber(star) }</Text>
         </View>
       </View>
     )
