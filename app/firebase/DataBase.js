@@ -16,6 +16,15 @@ export default class DataBase {
     });
   }
 
+  static reportVideo(url) {
+    video = url.match(/\?v=(.*)/);
+    if (!video) {
+      return;
+    }
+
+    firebase.database().ref('reports').push().set({ url: video[1], approved: false });
+  }
+
   static viewVideo(id) {
     firebase.database().ref(`videos/${id}/views`).transaction((view) => {
       view && view.count++;
