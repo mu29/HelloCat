@@ -18,11 +18,12 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     marginTop: 8,
+    backgroundColor: '#000',
   },
   video: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: '#000'
+    backgroundColor: '#000',
   },
   content: {
     width: 350,
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
   admob: {
     width: 300,
     height: 250,
+    backgroundColor: '#000',
   },
 });
 
