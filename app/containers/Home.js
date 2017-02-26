@@ -7,7 +7,7 @@ import Navigation from '../components/Navigation';
 import Card from '../components/Card';
 import Empty from '../components/Empty';
 import IconButton from '../components/IconButton';
-import { readVideoList, starVideo, unStarVideo } from '../modules/Video';
+import { readVideoList, viewVideo, clearViewData, starVideo, unStarVideo } from '../modules/Video';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,13 +62,14 @@ class Home extends Component {
   }
 
   setCurrentCard(index) {
-    const { videos } = this.props;
+    const { videos, viewVideo } = this.props;
+    viewVideo(videos[index].id);
     this.setState({ currentCard: videos[index + 1] || videos[0] });
   }
 
   render() {
     const { currentCard } = this.state;
-    const { stars, videos, starVideo, unStarVideo } = this.props;
+    const { views, stars, videos, clearViewData, starVideo, unStarVideo } = this.props;
     const currentId = currentCard && currentCard.id || 0;
 
     return (
@@ -79,10 +80,12 @@ class Home extends Component {
             ref="cardContainer"
             cards={ videos }
             loop={ true }
+            onLoop={ clearViewData }
             renderCard={ (cardData) => <Card {...cardData} next={ this.nextCard } /> }
             renderNoMoreCards={ () => <Empty /> }
             showYup={ false }
             showNope={ false }
+            onClickHandler={ () => null }
             cardRemoved={ this.setCurrentCard }
           />
         </View>
@@ -123,8 +126,9 @@ class Home extends Component {
 
 export default connect(
   ({ Video }) =>({
-    videos: Video.videos,
+    videos: Video.unWatchedVideos,
+    views: Video.views,
     stars: Video.stars
   }),
-  { readVideoList, starVideo, unStarVideo }
+  { readVideoList, viewVideo, clearViewData, starVideo, unStarVideo }
 )(Home);

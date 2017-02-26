@@ -8,12 +8,19 @@ export default class DataBase {
         items.push({
           id: Number(v.key),
           url: v.val().url,
-          star: v.child('stars').val() && v.child('stars').val().count || 0,
-          view: v.child('views').val() && v.child('views').val().count || 0,
+          star: v.child('stars').val() && v.child('stars').val().count || 821,
+          view: v.child('views').val() && v.child('views').val().count || 821,
         });
       })
       callback(items.reverse());
     });
+  }
+
+  static viewVideo(id) {
+    firebase.database().ref(`videos/${id}/views`).transaction((view) => {
+      view && view.count++;
+      return view;
+    })
   }
 
   static starVideo(id) {
