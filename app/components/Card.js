@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Platform, Text, Image, View, StyleSheet } from 'react-native';
-import YouTube from 'react-native-youtube'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AdMobBanner } from 'react-native-admob';
+import VideoPlayer from './VideoPlayer';
 import { commaNumber } from '../utils';
 
 const styles = StyleSheet.create({
@@ -78,19 +78,7 @@ export default class Card extends Component {
     return (
       <View style={ styles.container }>
         <View style={ styles.wrapper }>
-          <YouTube
-            videoId={ url }
-            play={ true }
-            hidden={ false }
-            playsInline={ true }
-            loop={ false }
-            style={ styles.video }
-            showInfo={ false }
-            rel={ false }
-            modestbranding={ true }
-            apiKey="AIzaSyAxvXdsbg9677FMfCfL3-kx0z7mnM4NA9Y"
-            onChangeState={ e => e.state === 'ended' && next() }
-          />
+          <VideoPlayer videoId={ url } style={ styles.video } onEnd={ next } />
         </View>
         <View style={ styles.content }>
           <Icon name="eye" size={ 16 } color="#BDBDBD" />
@@ -105,7 +93,6 @@ export default class Card extends Component {
 
   render() {
     const { ad } = this.props;
-    console.log(this.props);
     return ad ? this.renderAd() : this.renderCard()
   }
 }
