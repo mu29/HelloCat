@@ -82,7 +82,7 @@ class Home extends Component {
 
     return (
       <View style={ styles.container }>
-        <Navigation showModal={ () => this.refs.report.open() } />
+        <Navigation showModal={ () => this.refs.report.open() } refresh={ clearViewData } />
         <View style={ styles.card }>
           <SwipeCards
             ref="cardContainer"
@@ -97,36 +97,39 @@ class Home extends Component {
             cardRemoved={ this.setCurrentCard }
           />
         </View>
-        <View style={ styles.content }>
-          <IconButton
-            icon="arrow-left"
-            size={ 24 }
-            color="#797979"
-            iconStyle={ { marginBottom: 2 } }
-            enable
-            onClick={ this.previousCard }
-          />
-          <IconButton
-            icon="star"
-            size={ 36 }
-            color="#5B93FC"
-            enable={ stars.indexOf(currentId) > -1 }
-            onClick={ () => {
-              if (Object.keys(this.state.currentCard).length === 0) {
-                return;
-              }
-              stars.indexOf(currentId) > -1 ? unStarVideo(currentId) : starVideo(currentId)
-            }}
-          />
-          <IconButton
-            icon="arrow-right"
-            size={ 24 }
-            color="#797979"
-            iconStyle={ { marginLeft: 2, marginBottom: 2 } }
-            onClick={ () => this.refs.cardContainer._forceRightSwipe() }
-            enable
-          />
-        </View>
+        {
+          Number(currentId) &&
+          <View style={ styles.content }>
+            <IconButton
+              icon="arrow-left"
+              size={ 24 }
+              color="#797979"
+              iconStyle={ { marginBottom: 2 } }
+              enable
+              onClick={ this.previousCard }
+            />
+            <IconButton
+              icon="star"
+              size={ 36 }
+              color="#5B93FC"
+              enable={ stars.indexOf(currentId) > -1 }
+              onClick={ () => {
+                if (Object.keys(this.state.currentCard).length === 0) {
+                  return;
+                }
+                stars.indexOf(currentId) > -1 ? unStarVideo(currentId) : starVideo(currentId)
+              }}
+            />
+            <IconButton
+              icon="arrow-right"
+              size={ 24 }
+              color="#797979"
+              iconStyle={ { marginLeft: 2, marginBottom: 2 } }
+              onClick={ () => this.refs.cardContainer._forceRightSwipe() }
+              enable
+            />
+          </View> || undefined
+        }
         <Modal style={ styles.modal } position="center" ref="report">
           <Report reportVideo={ reportVideo } close={ () => this.refs.report.close() } />
         </Modal>
