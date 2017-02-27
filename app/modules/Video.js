@@ -16,13 +16,30 @@ const defaultState = {
 
 export default function (state = defaultState, action) {
   switch (action.type) {
-    case VIDEO_LIST_SUCCESS:
-      const unWatchedVideos = action.videos.filter(v => state.views.indexOf(v.id) === -1);
-      return { ...state, videos: action.videos, unWatchedVideos: unWatchedVideos.length === 0 ? action.videos : unWatchedVideos };
+    case VIDEO_LIST_SUCCESS: {
+      let unWatchedVideos = action.videos.filter(v => state.views.indexOf(v.id) === -1);
+      unWatchedVideos = unWatchedVideos.length === 0 ? action.videos : unWatchedVideos;
+      unWatchedVideos = unWatchedVideos.reduce((prev, curr, index) => {
+        prev.push(curr);
+        if ((index + 1) % 3 === 0) {
+          prev.push({ ad: true });
+        }
+        return prev;
+      }, []);
+      return { ...state, videos: action.videos, unWatchedVideos };
+    }
     case VIEW_VIDEO:
       return { ...state, views: [...state.views, action.id].filter((v, i, a) => a.indexOf(v) === i) };
-    case CLEAR_VIEW_DATA:
-      return { ...state, views: [], unWatchedVideos: state.videos };  
+    case CLEAR_VIEW_DATA: {
+      const unWatchedVideos = state.videos.reduce((prev, curr, index) => {
+        prev.push(curr);
+        if ((index + 1) % 3 === 0) {
+          prev.push({ ad: true });
+        }
+        return prev;
+      }, []);
+      return { ...state, views: [], unWatchedVideos };
+    }
     case STAR_VIDEO:
       return { ...state, stars: [...state.stars, action.id] };
     case UN_STAR_VIDEO:

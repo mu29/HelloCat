@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, Image, View, StyleSheet } from 'react-native';
-import YouTube from 'react-native-youtube'
+import { Platform, Text, Image, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { AdMobBanner } from 'react-native-admob';
+import VideoPlayer from './VideoPlayer';
 import { commaNumber } from '../utils';
 
 const styles = StyleSheet.create({
@@ -17,11 +18,12 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     marginTop: 8,
+    backgroundColor: '#000',
   },
   video: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: '#000'
+    backgroundColor: '#000',
   },
   content: {
     width: 350,
@@ -40,27 +42,43 @@ const styles = StyleSheet.create({
     color: '#5B93FC',
     fontWeight: '500',
   },
+  admobWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F5F5F5',
+  },
+  admob: {
+    width: 300,
+    height: 250,
+    backgroundColor: '#000',
+  },
 });
 
 export default class Card extends Component {
-  render() {
+  constructor() {
+    super();
+    this.renderAd = this.renderAd.bind(this);
+    this.renderCard = this.renderCard.bind(this);
+  }
+
+  renderAd() {
+    return (
+      <View style={ [styles.container, styles.admobWrapper] }>
+        <AdMobBanner
+          style={ styles.admob }
+          bannerSize="mediumRectangle"
+          adUnitID={ Platform.OS === 'android' ? 'ca-app-pub-6988311040138762/1354777738' : 'ca-app-pub-6988311040138762/5483926136' }
+        />
+      </View>
+    )
+  }
+
+  renderCard() {
     const { url, view, star, next } = this.props;
     return (
       <View style={ styles.container }>
         <View style={ styles.wrapper }>
-          <YouTube
-            videoId={ url }
-            play={ true }
-            hidden={ false }
-            playsInline={ true }
-            loop={ false }
-            style={ styles.video }
-            showInfo={ false }
-            rel={ false }
-            modestbranding={ true }
-            apiKey="AIzaSyCm10wCjq4co9FD-TPgWHv6pFHSoQnmAcg"
-            onChangeState={ e => e.state === 'ended' && next() }
-          />
+          <VideoPlayer videoId={ url } style={ styles.video } onEnd={ next } />
         </View>
         <View style={ styles.content }>
           <Icon name="eye" size={ 16 } color="#BDBDBD" />
@@ -71,5 +89,10 @@ export default class Card extends Component {
         </View>
       </View>
     )
+  }
+
+  render() {
+    const { ad } = this.props;
+    return ad ? this.renderAd() : this.renderCard()
   }
 }
