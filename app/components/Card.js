@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   admobWrapper: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'transparent',
   },
   admob: {
     width: 300,
