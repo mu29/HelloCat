@@ -26,7 +26,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  button: {
+  leftButton: {
+    marginLeft: 24,
+  },
+  rightButton: {
     marginRight: 24,
   },
 });
@@ -42,16 +45,21 @@ export default class Navigation extends Component {
   }
 
   render() {
-    const { showModal } = this.props;
+    const { showModal, refresh } = this.props;
     return (
       <View style={ styles.container }>
-        <View style={ { flex: 1 } } />
+        <View style={ styles.buttonWrapper }>
+          <TouchableHighlight underlayColor={ 'transparent' } onPress={ refresh }>
+            <Icon style={ styles.leftButton } name="refresh" color="#E0E0E0" size={ 24 } />
+          </TouchableHighlight>
+          <View style={ { flex: 1 } } />
+        </View>
         <Image source={ require('../resources/icon.png') } style={ { width: 24, height: 24 } } />
         <Text style={ styles.title }>HelloCat</Text>
         <View style={ styles.buttonWrapper }>
           <View style={ { flex: 1 } } />
           <TouchableHighlight underlayColor={ 'transparent' } onPress={ showModal }>
-            <Icon style={ styles.button } name="plus-circle" color="#E0E0E0" size={ 24 } />
+            <Icon style={ styles.rightButton } name="plus-circle" color="#E0E0E0" size={ 24 } />
           </TouchableHighlight>
         </View>
       </View>
