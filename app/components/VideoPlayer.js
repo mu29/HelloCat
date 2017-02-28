@@ -16,6 +16,7 @@ export default class VideoPlayer extends React.Component {
   static propTypes = {
     videoId: React.PropTypes.string,
     style: React.PropTypes.any,
+    play: React.PropTypes.bool,
     onEnd: React.PropTypes.func
   };
 
@@ -48,7 +49,7 @@ export default class VideoPlayer extends React.Component {
   }
 
   renderIOS() {
-    const { videoId, style } = this.props;
+    const { videoId, style, play } = this.props;
     const { loading, opacity } = this.state;
     return (
       <View style={ [styles.container, style] }>
@@ -58,7 +59,7 @@ export default class VideoPlayer extends React.Component {
             style={ StyleSheet.absoluteFill }
             apiKey="AIzaSyAxvXdsbg9677FMfCfL3-kx0z7mnM4NA9Y"
             videoId={ videoId }
-            play={ true }
+            play={ play }
             rel={ false }
             modestbranding={ true }
             showinfo={ false }
@@ -73,7 +74,7 @@ export default class VideoPlayer extends React.Component {
   }
 
   renderAndroid() {
-    const { videoId, style } = this.props;
+    const { videoId, style, play } = this.props;
     const { androidForceRelayoutFix } = this.state;
     return (
       <View style={ [styles.container, style] }>
@@ -87,7 +88,7 @@ export default class VideoPlayer extends React.Component {
           } }
           apiKey="AIzaSyAxvXdsbg9677FMfCfL3-kx0z7mnM4NA9Y"
           videoId={ videoId}
-          play={ true }
+          play={ play }
           rel={ false }
           modestbranding={ true }
           showinfo={ false }
