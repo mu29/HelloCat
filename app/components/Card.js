@@ -74,11 +74,12 @@ export default class Card extends Component {
   }
 
   renderCard() {
-    const { url, view, star, next } = this.props;
+    const { url, view, star, next, top } = this.props;
+
     return (
       <View style={ styles.container }>
         <View style={ styles.wrapper }>
-          <VideoPlayer videoId={ url } style={ styles.video } onEnd={ next } />
+          <VideoPlayer videoId={ url } style={ styles.video } play={ top } onEnd={ next } />
         </View>
         <View style={ styles.content }>
           <Icon name="eye" size={ 16 } color="#BDBDBD" />

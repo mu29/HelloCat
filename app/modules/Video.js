@@ -22,7 +22,7 @@ export default function (state = defaultState, action) {
       unWatchedVideos = unWatchedVideos.reduce((prev, curr, index) => {
         prev.push(curr);
         if ((index + 1) % 3 === 0) {
-          prev.push({ ad: true });
+          prev.push({ ad: true, url: `${curr.url}-ad` });
         }
         return prev;
       }, []);
@@ -34,7 +34,7 @@ export default function (state = defaultState, action) {
       const unWatchedVideos = state.videos.reduce((prev, curr, index) => {
         prev.push(curr);
         if ((index + 1) % 3 === 0) {
-          prev.push({ ad: true });
+          prev.push({ ad: true, url: `${curr.url}-ad` });
         }
         return prev;
       }, []);
