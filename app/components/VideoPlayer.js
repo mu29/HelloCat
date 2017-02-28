@@ -82,7 +82,7 @@ export default class VideoPlayer extends React.Component {
           style={ {
             position: 'absolute',
             left: 0,
-            top: 0,
+            top: androidForceRelayoutFix ? 0 : 1,
             right: androidForceRelayoutFix ? 0 : 1,
             bottom: 0,
           } }
