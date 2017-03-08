@@ -95,9 +95,7 @@ class Home extends Component {
             showNope={ false }
             onClickHandler={ () => null }
             cardRemoved={ this.setCurrentCard }
-            stackDepth={ 3 }
             cardKey="url"
-            stack
           />
         </View>
         {
